@@ -1,5 +1,6 @@
 import { connectorTheme } from "akeneo-design-system";
 import { Datagrid } from "react-ads-data-grid";
+import { useArgs } from '@storybook/client-api';
 import rows from "../mockData";
 
 const headers = [
@@ -69,15 +70,18 @@ export const ServerSideSort = {
   },
 };
 
-export const DraggableRows = {
-  args: {
-    ...Default.args,
-    isDragAndDroppable: true,
-    onReorder: (newIndices) => {
-      console.log(newIndices);
-    },
-  },
+export const DraggableRows = args => {
+  const [dataGridArgs, updateArgs] = useArgs(args);
+
+  return <Datagrid isDragAndDroppable={true}
+    onReorder={(newIndices) => {
+      updateArgs({ rows: newIndices.map(index => dataGridArgs.rows[index]) })
+    }}
+    {...dataGridArgs}
+  />
 };
+
+DraggableRows.args = Default.args;
 
 export const SelectableAndToolbarActions = {
   args: {
