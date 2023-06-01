@@ -119,6 +119,8 @@ export const Pagination = {
     isPaginationAllowed: true,
     isServerSidePagination: false,
     paginationSticky: 0,
+    currentPage: 1,
+    itemsPerPage: 5,
     onPageChange: (page) => {
       console.log(page);
     },
